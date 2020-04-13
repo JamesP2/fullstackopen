@@ -1,0 +1,15 @@
+title ex0.6
+
+note over browser:
+JS code executed to add note to the list of notes,
+redraw the notes and send the note to the server
+for everybody else to see
+end note
+
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+browser-->server: JSON {content: "hello world again!", date: "2020-04-13T14:42:25.781Z"}
+server-->browser: JSON Response {"message":"note created"}
+
+note over browser:
+Browser logs successful message
+end note
