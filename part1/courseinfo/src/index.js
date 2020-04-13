@@ -15,7 +15,7 @@ const Content = (props) => {
   const result = []
 
   props.partsAndExercises.forEach(element => {
-    result.push(<p>{element[0]} {element[1]}</p>)
+    result.push(<Part part={element[0]} exercises={element[1]} />)
   });
 
   return result
@@ -32,6 +32,14 @@ const Total = (props) => {
   return (
     <>
       <p>Number of exercises {total}</p>
+    </>
+  )
+}
+
+const Part = (props) => {
+  return (
+    <>
+      <p>{props.part} {props.exercises}</p>
     </>
   )
 }
