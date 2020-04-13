@@ -15,11 +15,7 @@ const Content = (props) => {
   const result = []
 
   props.partsAndExercises.forEach(element => {
-<<<<<<< HEAD
     result.push(<Part part={element[0]} exercises={element[1]} />)
-=======
-    result.push(<p>{element[0]} {element[1]}</p>)
->>>>>>> 9e052b5de0b976c8ead3b5b1392dd3056b15cc81
   });
 
   return result
