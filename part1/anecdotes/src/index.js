@@ -11,6 +11,13 @@ const Button = ({handleClick, text}) => (
   </button>
 )
 
+const Anecdote = ({anecdote, votes}) => (
+  <>
+  <p>{anecdote}</p>
+  <p>This anecdote has {votes} votes.</p> 
+  </>
+)
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const initialVotes = new Uint8Array(props.anecdotes.length)
@@ -42,10 +49,9 @@ const App = (props) => {
       <Header text="Anecdote of the day" />
       <Button handleClick={selectRandom} text="next anecdote" />
       <Button handleClick={vote} text="vote!" />
-      <p>{props.anecdotes[selected]}</p>
-      <p>This anecdote has {votes[selected]} votes.</p> 
+      <Anecdote anecdote={props.anecdotes[selected]} votes={votes[selected]} />
       <Header text="Anecdote with the most votes" />
-      <p>{props.anecdotes[mostPopularIndex()]}</p>
+      <Anecdote anecdote={props.anecdotes[mostPopularIndex()]} votes={votes[mostPopularIndex()]} />
     </>
   )
 }
