@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+const Header = ({ text }) => (
+  <h1>{text}</h1>
+)
 
 const Button = ({handleClick, text}) => (
   <button onClick={handleClick}>
@@ -21,12 +24,28 @@ const App = (props) => {
     setVotes(newVotes)
   }
 
+  const mostPopularIndex = () => {
+    let highestIndex = 0
+    let mostVotes = 0
+    for (let i = 0; i < votes.length; i++) {
+      if (votes[i] > mostVotes) {
+        mostVotes = votes[i]
+        highestIndex = i
+      }
+    }
+
+    return highestIndex
+  }
+
   return (
     <>
+      <Header text="Anecdote of the day" />
       <Button handleClick={selectRandom} text="next anecdote" />
       <Button handleClick={vote} text="vote!" />
       <p>{props.anecdotes[selected]}</p>
       <p>This anecdote has {votes[selected]} votes.</p> 
+      <Header text="Anecdote with the most votes" />
+      <p>{props.anecdotes[mostPopularIndex()]}</p>
     </>
   )
 }
