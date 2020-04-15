@@ -2,19 +2,28 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 
-const Header = ({text}) => (
+const Header = ({ text }) => (
   <h1>{text}</h1>
 )
 
-const Button = ({onClick, text}) => (
+const Button = ({ onClick, text }) => (
   <button onClick={onClick}>{text}</button>
 )
 
-const Statistic = ({name, value}) => (
-  <p>{name} {value}</p>
+const StatisticRow = ({ name, value }) => (
+  <>
+    <tr>
+      <td>
+        {name}
+      </td>
+      <td>
+        {value}
+      </td>
+    </tr>
+  </>
 )
 
-const Statistics = ({good, bad, neutral}) => {
+const Statistics = ({ good, bad, neutral }) => {
   const calculateAverage = (good, bad, all) => all === 0 ? 0 : (good - bad) / all
 
   const calculatePositive = (good, all) => all === 0 ? 0 : (good / all) * 100
@@ -25,12 +34,22 @@ const Statistics = ({good, bad, neutral}) => {
 
   return (
     <>
-    <Statistic name="good" value={good} />
-    <Statistic name="neutral" value={neutral} />
-    <Statistic name="bad" value={bad} />
-    <Statistic name="all" value={all} />
-    <Statistic name="average" value={calculateAverage(good, bad, all)} />
-    <Statistic name="positive" value={calculatePositive(good, all) + "%"} />
+      <table>
+        <thead>
+          <tr>
+            <th>Statistic</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <StatisticRow name="good" value={good} />
+          <StatisticRow name="neutral" value={neutral} />
+          <StatisticRow name="bad" value={bad} />
+          <StatisticRow name="all" value={all} />
+          <StatisticRow name="average" value={calculateAverage(good, bad, all)} />
+          <StatisticRow name="positive" value={calculatePositive(good, all) + "%"} />
+        </tbody>
+      </table>
     </>
   )
 }
@@ -59,6 +78,6 @@ const App = () => {
   )
 }
 
-ReactDOM.render(<App />, 
+ReactDOM.render(<App />,
   document.getElementById('root')
 )
