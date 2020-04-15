@@ -20,10 +20,28 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [all, setAll] = useState(0)
+  const [average, setAverage] = useState(0)
 
-  const incrementGood = () => setGood(good + 1)
-  const incrementNeutral = () => setNeutral(neutral + 1)
-  const incrementBad = () => setBad(bad + 1)
+  const incrementGood = () => {
+    setGood(good + 1)
+    setAll(all + 1)
+    calculateAverage()
+  }
+
+  const incrementNeutral = () => {
+    setNeutral(neutral + 1)
+    setAll(all + 1)
+    calculateAverage()
+  }
+
+  const incrementBad = () => {
+    setBad(bad + 1)
+    setAll(all + 1)
+    calculateAverage()
+  }
+
+  const calculateAverage = () => setAverage((good - bad) / all)
 
   return (
     <>
@@ -35,6 +53,8 @@ const App = () => {
       <Statistic name="good" variable={good} />
       <Statistic name="neutral" variable={neutral} />
       <Statistic name="bad" variable={bad} />
+      <Statistic name="all" variable={all} />
+      <Statistic name="average" variable={average} />
     </>
   )
 }
