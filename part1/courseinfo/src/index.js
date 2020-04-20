@@ -2,30 +2,30 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 
-const Header = (props) => {
+const Header = ({ course }) => {
   return (
     <>
-      <h1>{props.course.name}</h1>
+      <h1>{course.name}</h1>
     </>
   )
 }
 
-const Content = (props) => {
+const Content = ({ course }) => {
 
   const result = []
 
-  props.course.parts.forEach(element => {
+  course.parts.forEach(element => {
     result.push(<Part part={element.name} exercises={element.exercises} />)
   });
 
   return result
 }
 
-const Total = (props) => {
+const Total = ({ course }) => {
 
   var total = 0;
 
-  props.course.parts.forEach(element => {
+  course.parts.forEach(element => {
     total += element.exercises
   });
 
