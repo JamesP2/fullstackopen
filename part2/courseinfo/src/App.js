@@ -1,5 +1,6 @@
 import React from 'react'
 import Course from './components/Course'
+import Header from './components/Header'
 
 const App = () => {
     const courses = [
@@ -49,6 +50,7 @@ const App = () => {
 
     return (
         <div>
+            <Header text="Web Development Curriculum" />
             {courses.map(course =>
                 <Course key={course.id} course={course} />
             )}

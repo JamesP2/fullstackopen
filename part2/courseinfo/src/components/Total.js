@@ -3,9 +3,11 @@ import React from 'react'
 const Total = ({ course }) => {
     const sum = course.parts.reduce((accumulatedParts, currentPart) => 
                 accumulatedParts + currentPart.exercises, 0)    
-                
+
     return (
-        <p>Number of exercises {sum}</p>
+        <p>
+            <strong>Total number of exercises: {sum}</strong>
+        </p>
     )
 }
 
