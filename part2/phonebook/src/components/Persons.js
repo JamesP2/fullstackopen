@@ -1,11 +1,11 @@
 import React from 'react'
 import Person from './Person'
 
-const Persons = ({ filter, persons }) => (
+const Persons = ({ filter, persons, handleDelete }) => (
         <>
             {
                 persons.filter(person => filter === '' || person.name.toLowerCase().includes(filter))
-                    .map(person => <Person key={person.name} person={person} />)
+                    .map(person => <Person key={person.name} person={person} handleDelete={() => handleDelete(person.id)}/>)
             }
         </>
     )

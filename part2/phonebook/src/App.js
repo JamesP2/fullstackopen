@@ -30,7 +30,7 @@ const App = () => {
       number: newNumber
     }
 
-    personsService.create(newPerson)
+    personsService.createPerson(newPerson)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
@@ -50,6 +50,11 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  const handleDelete = (id) => {
+    personsService.deletePerson(id)
+      .then(() => setPersons(persons.filter(person => person.id !== id)))
+  }
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -58,7 +63,7 @@ const App = () => {
       <PersonForm newName={newName} newNumber={newNumber} handleSubmit={handleSubmit}
         handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      <Persons filter={filter} persons={persons} />
+      <Persons filter={filter} persons={persons} handleDelete={handleDelete} />
     </div>
   )
 }
