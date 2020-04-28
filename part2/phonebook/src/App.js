@@ -16,12 +16,25 @@ const App = () => {
   }, [])
 
 
+  const blankFields = () => {
+    setNewName('')
+    setNewNumber('')
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (persons.filter(person => person.name === newName).length !== 0) {
-      alert(`${newName} is already in the phone book!`)
-      setNewName('')
+    const existingPerson = persons.find(person => person.name === newName)
+
+    if (existingPerson !== undefined) {
+      
+      if (window.confirm(`${newName} is already in the phone book! Press OK to replace the old number with a new one.`))
+        personsService.updatePerson(existingPerson.id, { ...existingPerson, number: newNumber })
+          .then((updatedPerson) => {
+            setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
+          })
+
+      blankFields()
       return
     }
 
@@ -33,8 +46,7 @@ const App = () => {
     personsService.createPerson(newPerson)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
-        setNewName('')
-        setNewNumber('')
+        blankFields()
       })
   }
 

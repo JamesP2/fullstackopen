@@ -5,7 +5,7 @@ const Persons = ({ filter, persons, handleDelete }) => (
         <>
             {
                 persons.filter(person => filter === '' || person.name.toLowerCase().includes(filter))
-                    .map(person => <Person key={person.name} person={person} handleDelete={() => handleDelete(person.id)}/>)
+                    .map(person => <Person key={person.id} person={person} handleDelete={() => handleDelete(person.id)}/>)
             }
         </>
     )
