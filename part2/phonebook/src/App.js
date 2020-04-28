@@ -39,8 +39,11 @@ const App = () => {
       if (window.confirm(`${newName} is already in the phone book! Press OK to replace the old number with a new one.`))
         personsService.updatePerson(existingPerson.id, { ...existingPerson, number: newNumber })
           .then((updatedPerson) => {
-            createNotification("success", `Updated ${newName}`)
+            createNotification('success', `Updated ${newName}`)
             setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
+          })
+          .catch(error => {
+            createNotification('error', `${newName} has been deleted from the server. Cannot update.`)
           })
 
       blankFields()
@@ -54,7 +57,7 @@ const App = () => {
 
     personsService.createPerson(newPerson)
       .then(returnedPerson => {
-        createNotification("success", `Added ${newName}`)
+        createNotification('success', `Added ${newName}`)
         setPersons(persons.concat(returnedPerson))
         blankFields()
       })
@@ -75,7 +78,7 @@ const App = () => {
   const handleDelete = (id) => {
     personsService.deletePerson(id)
       .then(() => {
-        createNotification("success", `Deleted ${persons.find(person => person.id === id).name}`)
+        createNotification('success', `Deleted ${persons.find(person => person.id === id).name}`)
         setPersons(persons.filter(person => person.id !== id))
       })
   }
