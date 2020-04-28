@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import personsService from './services/persons'
@@ -9,12 +10,19 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notificationClass, setNotificationClass] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState('')
 
   useEffect(() => {
     personsService.getAll()
       .then(people => setPersons(people))
   }, [])
 
+  const createNotification = (className, message) => {
+    setNotificationClass(className)
+    setNotificationMessage(message)
+    setTimeout(() => setNotificationMessage(null), 5000)
+  }
 
   const blankFields = () => {
     setNewName('')
@@ -27,10 +35,11 @@ const App = () => {
     const existingPerson = persons.find(person => person.name === newName)
 
     if (existingPerson !== undefined) {
-      
+
       if (window.confirm(`${newName} is already in the phone book! Press OK to replace the old number with a new one.`))
         personsService.updatePerson(existingPerson.id, { ...existingPerson, number: newNumber })
           .then((updatedPerson) => {
+            createNotification("success", `Updated ${newName}`)
             setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
           })
 
@@ -45,6 +54,7 @@ const App = () => {
 
     personsService.createPerson(newPerson)
       .then(returnedPerson => {
+        createNotification("success", `Added ${newName}`)
         setPersons(persons.concat(returnedPerson))
         blankFields()
       })
@@ -64,12 +74,16 @@ const App = () => {
 
   const handleDelete = (id) => {
     personsService.deletePerson(id)
-      .then(() => setPersons(persons.filter(person => person.id !== id)))
+      .then(() => {
+        createNotification("success", `Deleted ${persons.find(person => person.id === id).name}`)
+        setPersons(persons.filter(person => person.id !== id))
+      })
   }
 
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification className={notificationClass} message={notificationMessage} />
       <Filter filter={filter} handleFilter={handleFilter} />
       <h2>Add New</h2>
       <PersonForm newName={newName} newNumber={newNumber} handleSubmit={handleSubmit}
